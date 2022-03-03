@@ -4,6 +4,6 @@ orderevent:
 deliveryevent:
   url: http://localhost:8090/deliveries
 events:
-  hostname: kafkalmao.eastus.cloudapp.azure.com
+  hostname: localhost
   port: 9092
   topic: events
