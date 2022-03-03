@@ -1,0 +1,101 @@
+---
+openapi: 3.0.0
+info:
+  title: API for EasyEats
+  description: This API receives events for a food delivery app
+  contact:
+    email: stevennguyen901@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
+paths:
+  /orders:
+    post:
+      tags:
+      - admins
+      summary: adds an order
+      description: Adds an order to the system
+      operationId: app.addOrder
+      requestBody:
+        description: Order to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Orders'
+      responses:
+        "201":
+          description: Order added
+        "400":
+          description: invalid input, object invalid
+        "409":
+          description: That order already exists
+  /deliveries:
+    post:
+      tags:
+      - admins
+      summary: adds a delivery
+      description: Adds a delivery to the system
+      operationId: app.addDelivery
+      requestBody:
+        description: Delivery to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Deliveries'
+      responses:
+        "201":
+          description: Delivery added
+        "400":
+          description: invalid input, object invalid
+        "409":
+          description: That delivery already exists
+components:
+  schemas:
+    Orders:
+      required:
+      - customer
+      - food
+      - orderID
+      - price
+      type: object
+      properties:
+        customer:
+          type: string
+          example: Lebron James
+        orderID:
+          type: number
+          example: 1
+        food:
+          type: string
+          example: sushi
+        price:
+          type: number
+          format: money
+          example: 43.45
+    Deliveries:
+      required:
+      - address
+      - distance
+      - driver
+      - orderNum
+      type: object
+      properties:
+        orderNum:
+          type: number
+          example: 1
+        distance:
+          type: number
+          example: 54.2
+        driver:
+          type: string
+          example: Joe Joe
+        address:
+          type: string
+          format: 1234 21ave
+          example: "1234 21ave"

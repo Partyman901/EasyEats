@@ -1,0 +1,9 @@
+version: 1
+orderevent:
+  url: http://localhost:8090/orders
+deliveryevent:
+  url: http://localhost:8090/deliveries
+events:
+  hostname: kafkalmao.eastus.cloudapp.azure.com
+  port: 9092
+  topic: events

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  audit_log:
+    build: ./audit_log
+    image: partyman901/analytics
+    container_name: analytics
+    ports: 
+      - '8100:8100'
+    restart: always
+    
+  results:
+    image: partyman901/results
+    build: ./results
+    container_name: results
+    ports: 
+      - '8090:8090'
+    restart: always
+
+  authentication:
+    image: partyman901/authentication
+    build: ./authentication
+    env_file:
+      - './authentication/.env'
+    ports:
+      - '8080:5000'
+
+  voter:
+    build: ./voter
+    image: partyman901/voter
+    container_name: voter
+    ports: 
+      - '8110:8110'
+    restart: always
+

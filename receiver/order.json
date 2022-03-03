@@ -1,0 +1,10 @@
+[ 
+    { 
+        "received_timestamp": "2022-01-22 09:12:33.001000", 
+        "request_data": "Patient 502594 with a heart rate of 109" 
+    }, 
+    { 
+        "received_timestamp": "2022-01-22 09:12:34.123000", 
+        "request_data": "Patient 615272 with diastolic BP of 140 and systolic BP of 80" 
+    }
+]

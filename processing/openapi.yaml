@@ -1,0 +1,54 @@
+---
+openapi: 3.0.0
+info:
+  title: Stats API
+  description: This API provides event stats
+  contact:
+    email: stevennguyen901@gmail.com
+  version: 1.0.0
+
+paths:
+  /stats:
+    get:
+      summary: Gets event stats
+      description: Gets orders and deliveries processed statistics
+      operationId: app.get_stats
+      responses:
+        "200":  
+          description: Successfully return list of processed statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/AppStats'
+        "400":
+          description: invalid input, object invalid
+
+components:
+  schemas:
+    AppStats:
+      required:
+      - num_orders
+      - num_deliveries
+      - max_price_purchase
+      - max_distance_delivery
+      - avg_price_purchase
+      type: object
+      properties:
+        num_orders:
+          type: integer
+          example: 12345
+        num_deliveries:
+          type: integer
+          example: 54321
+        max_price_purchase:
+          type: integer
+          example: 321
+        max_distance_delivery:
+          type: integer
+          format: money
+          example: 123
+        avg_price_purchase:
+          type: integer
+          example: 54

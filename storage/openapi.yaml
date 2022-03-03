@@ -1,0 +1,173 @@
+---
+openapi: 3.0.0
+info:
+  title: API for EasyEats
+  description: This API receives events for a food delivery app
+  contact:
+    email: stevennguyen901@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
+paths:
+  /orders:
+    # post:
+    #   tags:
+    #   - admins
+    #   summary: adds an order
+    #   description: Adds an order to the system
+    #   operationId: app.addOrder
+    #   requestBody:
+    #     description: Order to add
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: '#/components/schemas/Orders'
+    #   responses:
+    #     "201":
+    #       description: Order added
+    #     "400":
+    #       description: invalid input, object invalid
+    #     "409":
+    #       description: That order already exists
+    get:
+      tags:
+      - display
+      summary: gets new order
+      description: Gets new order after timestamp
+      operationId: app.getOrder
+      parameters:
+        - name: timestamp
+          in: query
+          description: limits number of orders displayed
+          schema:
+            type: string
+            format: date-time
+            example: 2020-03-02T20:35:41
+      responses:
+        "201":
+          description: Successfully return list of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Orders'
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /deliveries:
+    # post:
+    #   tags:
+    #   - admins
+    #   summary: adds a delivery
+    #   description: Adds a delivery to the system
+    #   operationId: app.addDelivery
+    #   requestBody:
+    #     description: Delivery to add
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: '#/components/schemas/Deliveries'
+    #   responses:
+    #     "201":
+    #       description: Delivery added
+    #     "400":
+    #       description: invalid input, object invalid
+    #     "409":
+    #       description: That delivery already exists
+    get:
+      tags:
+      - display
+      summary: gets new delivery
+      description: Gets new delivery after timestamp
+      operationId: app.getDelivery
+      parameters:
+        - name: timestamp
+          in: query
+          description: limits number of deliveries displayed
+          schema:
+            type: string
+            format: date-time
+            example: 2020-03-02T20:35:41
+      responses:
+        "201":
+          description: Successfully return list of deliveries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Deliveries'
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  schemas:
+    Orders:
+      required:
+      - customer
+      - food
+      - orderID
+      - price
+      - traceID
+      type: object
+      properties:
+        customer:
+          type: string
+          example: Lebron James
+        orderID:
+          type: number
+          example: 1
+        food:
+          type: string
+          example: sushi
+        price:
+          type: number
+          format: money
+          example: 43.45
+        traceID:
+          type: string
+          example: 71a042ef-d88c-4c6c-9d93-37df3e243e91
+    Deliveries:
+      required:
+      - address
+      - distance
+      - driver
+      - orderNum
+      - traceID
+      type: object
+      properties:
+        orderNum:
+          type: number
+          example: 1
+        distance:
+          type: number
+          example: 54.2
+        driver:
+          type: string
+          example: Joe Joe
+        address:
+          type: string
+          format: 1234 21ave
+          example: "1234 21ave"
+        traceID:
+          type: string
+          example: 71a042ef-d88c-4c6c-9d93-37df3e243e91
