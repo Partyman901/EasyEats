@@ -6,6 +6,6 @@ datastore:
   port: 3306
   db: events
 events: 
-  hostname: localhost
+  hostname: kafkalmao.eastus.cloudapp.azure.com
   port: 9092 
   topic: events
