@@ -156,5 +156,5 @@ if __name__== "__main__":
     t1 = Thread(target=process_messages)
     logger.info(f"t1 = {t1}")
     t1.setDaemon(True)
-    t1.start
+    t1.start()
     app.run(port=8090, debug=True)

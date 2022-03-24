@@ -57,7 +57,6 @@ services:
       - '8080:8080'
     depends_on:
       - "kafka"
-    restart: always
     
   storage:
     image: storage
@@ -67,7 +66,6 @@ services:
     depends_on:
       - "kafka"
       - "db"
-    restart: always
 
   processing:
     image: processing
@@ -79,7 +77,6 @@ services:
       - 'storage'
     volumes:
       - my-db:/var/lib/sqlite
-    restart: always
 
   audit_log:
     image: audit_log
@@ -88,7 +85,6 @@ services:
       - '8110:8110'
     depends_on:
       - "kafka"
-    restart: always
 
 volumes:
   my-db:
