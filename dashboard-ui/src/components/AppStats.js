@@ -46,7 +46,7 @@ export default function AppStats() {
 							<td colspan="2">Max Price Purchase: {stats['max_price_purchase']}</td>
 						</tr>
 						<tr>
-							<td colspan="2">Max Delivery Distance: {stats['max_delivery_distance']}</td>
+							<td colspan="2">Max Delivery Distance: {stats['max_distance_delivery']}</td>
 						</tr>
 						<tr>
 							<td colspan="2">Avg Price Purchase: {stats['avg_price_purchase']}</td>
