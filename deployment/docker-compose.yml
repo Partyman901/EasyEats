@@ -84,6 +84,7 @@ services:
       - "kafka"
 
   dashboard:
+    build: ../dashboard-ui
     image: dashboard
     ports:
     - "3000:3000"
