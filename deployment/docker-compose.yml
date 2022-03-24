@@ -70,8 +70,6 @@ services:
   processing:
     image: processing
     container_name: processing
-    ports:
-      - '8100:8100'
     network_mode: host
     depends_on:
       - 'storage'
