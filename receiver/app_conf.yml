@@ -4,6 +4,6 @@ orderevent:
 deliveryevent:
   url: http://easyeats.eastus.cloudapp.azure.com:8090/deliveries
 events:
-  hostname: db
+  hostname: kafka
   port: 9092
   topic: events
