@@ -54,7 +54,7 @@ services:
       - "kafka"
     
   storage:
-    build: ../analytics
+    build: ../storage
     image: storage
     container_name: storage
     ports: 
@@ -64,7 +64,7 @@ services:
       - "db"
 
   processing:
-    build: ../analytics
+    build: ../processing
     image: processing
     container_name: processing
     network_mode: host
@@ -75,7 +75,7 @@ services:
       - my-db:/var/lib/sqlite
 
   audit_log:
-    build: ../analytics
+    build: ../audit_log
     image: audit_log
     container_name: audit_log
     ports: 
