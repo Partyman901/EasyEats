@@ -1,8 +1,8 @@
 version: 1
 orderevent:
-  url: http://localhost:8090/orders
+  url: http://easyeats.eastus.cloudapp.azure.com:8090/orders
 deliveryevent:
-  url: http://localhost:8090/deliveries
+  url: http://easyeats.eastus.cloudapp.azure.com:8090/deliveries
 events:
   hostname: localhost
   port: 9092
