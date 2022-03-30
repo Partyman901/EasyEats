@@ -5,6 +5,7 @@ import logging
 import logging.config
 import datetime
 import json
+import time
 
 from threading import Thread
 from pykafka.common import OffsetType
@@ -74,7 +75,17 @@ def process_messages():
     """ Process event messages """
     logger.info(f"Started Processing Messages!")
     hostname = f'{app_config["events"]["hostname"]}:{app_config["events"]["port"]}'
-    client = KafkaClient(hosts=hostname)
+    retry_count = 0
+    while retry_count < app_config["events"]["retries"]:
+        logger.info(f"Trying to Connect to Kafka on retry count {retry_count}")
+        try:
+            client = KafkaClient(hosts=hostname)
+            retry_count = app_config["events"]["retries"]
+        except Exception as e:
+            logger.error(f"Connection Failed! Error: {e}")
+            time.sleep(app_config["events"]["sleep_time"])
+            retry_count += 1
+
     topic = client.topics[str.encode(app_config["events"]["topic"])]
     consumer = topic.get_simple_consumer(consumer_group=b'event_group', reset_offset_on_start=False, auto_offset_reset=OffsetType.LATEST)
 
