@@ -39,16 +39,23 @@ paths:
       tags:
       - display
       summary: gets new order
-      description: Gets new order after timestamp
+      description: Gets new order between two timestamps
       operationId: app.getOrder
       parameters:
-        - name: timestamp
+        - name: start_timestamp
           in: query
           description: limits number of orders displayed
           schema:
             type: string
             format: date-time
             example: 2020-03-02T20:35:41
+        - name: end_timestamp
+          in: query
+          description: limits number of orders displayed
+          schema:
+            type: string
+            format: date-time
+            example: 2022-03-02T20:35:41
       responses:
         "201":
           description: Successfully return list of orders
@@ -91,16 +98,23 @@ paths:
       tags:
       - display
       summary: gets new delivery
-      description: Gets new delivery after timestamp
+      description: Gets new delivery between two timestamps
       operationId: app.getDelivery
       parameters:
-        - name: timestamp
+        - name: start_timestamp
           in: query
           description: limits number of deliveries displayed
           schema:
             type: string
             format: date-time
             example: 2020-03-02T20:35:41
+        - name: end_timestamp
+          in: query
+          description: limits number of deliveries displayed
+          schema:
+            type: string
+            format: date-time
+            example: 2022-03-02T20:35:41
       responses:
         "201":
           description: Successfully return list of deliveries

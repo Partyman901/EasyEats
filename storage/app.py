@@ -10,6 +10,7 @@ from threading import Thread
 from pykafka.common import OffsetType
 from pykafka import KafkaClient
 from sqlalchemy import create_engine
+from sqlalchemy import and_
 from sqlalchemy.orm import sessionmaker
 from base import Base
 from delivery import Delivery
@@ -35,12 +36,13 @@ DB_SESSION = sessionmaker(bind=DB_ENGINE)
 # BRUH =  mysql+pymysql://root:P@ssw0rd!>@localhost:3306/events
 
 
-def getOrder(timestamp):
+def getOrder(start_timestamp, end_timestamp):
     """ Gets a order event """
     session = DB_SESSION()
     logger.info(f"Connected to DB. Hostname: {hostname}, Port: {port}")
-    timestamp_datetime = datetime.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S")
-    orders = session.query(Order).filter(Order.date_created >= timestamp_datetime)
+    start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%S")
+    end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%S")
+    orders = session.query(Order).filter(Order.date_created >= start_timestamp_datetime, Order.date_created < end_timestamp_datetime)
     results_list = []
 
     for order in orders:
