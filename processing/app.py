@@ -149,7 +149,7 @@ def get_stats():
 
 def create_db():
     """ Creates sqlite database for when it doesn't exist """
-    conn = sqlite3.connect("app_config['datastore']['filename']")
+    conn = sqlite3.connect(app_config['datastore']['filename'])
     c = conn.cursor()
     c.execute('''
         CREATE TABLE stats
@@ -164,7 +164,7 @@ def create_db():
     conn.commit()
     conn.close() 
 
-if os.path.exists("app_config['datastore']['filename']") != True:
+if os.path.exists(app_config['datastore']['filename']) != True:
     create_db()
     logger.info(f"Created sqlite database!")
 
