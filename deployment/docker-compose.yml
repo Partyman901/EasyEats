@@ -116,7 +116,7 @@ services:
     networks:
       - api.network
 
-  dashboard:
+  dashboard-ui:
     build: ../dashboard-ui
     image: dashboard
     ports:
