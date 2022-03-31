@@ -18,22 +18,6 @@ from sqlalchemy import create_engine
 from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
 
-if os.path.exists("app_config['datastore']['filename']") != True:
-    conn = sqlite3.connect("app_config['datastore']['filename']")
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE stats
-        (id INTEGER PRIMARY KEY ASC,
-        num_orders INTEGER NOT NULL,
-        num_deliveries INTEGER NOT NULL,
-        max_price_purchase INTEGER,
-        max_distance_delivery INTEGER,
-        avg_price_purchase INTEGER,
-        last_updated VARCHAR(100) NOT NULL)
-        ''')
-    conn.commit()
-    conn.close() 
-
 if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":
     print("In Test Environment")
     app_conf_file = "/config/app_conf.yml"
@@ -55,6 +39,23 @@ logger = logging.getLogger('basicLogger')
 logger.info("App Conf File: %s" % app_conf_file)
 logger.info("Log Conf File: %s" % log_conf_file)
 
+if os.path.exists("app_config['datastore']['filename']") != True:
+    conn = sqlite3.connect("app_config['datastore']['filename']")
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE stats
+        (id INTEGER PRIMARY KEY ASC,
+        num_orders INTEGER NOT NULL,
+        num_deliveries INTEGER NOT NULL,
+        max_price_purchase INTEGER,
+        max_distance_delivery INTEGER,
+        avg_price_purchase INTEGER,
+        last_updated VARCHAR(100) NOT NULL)
+        ''')
+    conn.commit()
+    conn.close() 
+    logger.info(f"Created sqlite database!")
+
 DB_ENGINE = create_engine(f"sqlite:///{app_config['datastore']['filename']}")
 Base.metadata.bind = DB_ENGINE
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
@@ -65,7 +66,7 @@ def populate_stats():
     current_date = datetime.datetime.now()
     format_date = current_date.strftime("%Y-%m-%dT%H:%M:%S")
     session = DB_SESSION()
-    if os.path.isfile('stats.sqlite'):
+    if os.path.exists("app_config['datastore']['filename']") != True:
         last_updated = session.query(Stats).order_by(Stats.last_updated.desc()).first()
         if last_updated == None:
             last_updated = {'num_orders': 0, 'num_deliveries': 0, 'max_price_purchase': 0, 'max_distance_delivery': 0, 'avg_price_purchase': 0, 'last_updated': '2020-02-16T16:18:47'}
