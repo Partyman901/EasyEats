@@ -39,22 +39,6 @@ logger = logging.getLogger('basicLogger')
 logger.info("App Conf File: %s" % app_conf_file)
 logger.info("Log Conf File: %s" % log_conf_file)
 
-if os.path.exists("app_config['datastore']['filename']") != True:
-    conn = sqlite3.connect("app_config['datastore']['filename']")
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE stats
-        (id INTEGER PRIMARY KEY ASC,
-        num_orders INTEGER NOT NULL,
-        num_deliveries INTEGER NOT NULL,
-        max_price_purchase INTEGER,
-        max_distance_delivery INTEGER,
-        avg_price_purchase INTEGER,
-        last_updated VARCHAR(100) NOT NULL)
-        ''')
-    conn.commit()
-    conn.close() 
-    logger.info(f"Created sqlite database!")
 
 DB_ENGINE = create_engine(f"sqlite:///{app_config['datastore']['filename']}")
 Base.metadata.bind = DB_ENGINE
@@ -163,7 +147,7 @@ def create_db():
         ''')
     conn.commit()
     conn.close() 
-
+logger.info(f"THE PATH IS {app_config['datastore']['filename']}")
 if os.path.exists(app_config['datastore']['filename']) != True:
     create_db()
     logger.info(f"Created sqlite database!")
