@@ -54,7 +54,7 @@ services:
     image: receiver
     container_name: receiver
     ports: 
-      - '8080:8080'
+      - '8080'
     environment:
       - TARGET_ENV=test
     volumes:
@@ -62,13 +62,15 @@ services:
       - /home/azureuser/logs:/logs
     depends_on:
       - "kafka"
+    networks:
+      - api.network
     
   storage:
     build: ../storage
     image: storage
     container_name: storage
     ports: 
-      - '8090:8090'
+      - '8090'
     environment:
       - TARGET_ENV=test
     volumes:
@@ -77,12 +79,15 @@ services:
     depends_on:
       - "kafka"
       - "db"
+    networks:
+      - api.network
 
   processing:
     build: ../processing
     image: processing
     container_name: processing
-    network_mode: host
+    ports:
+      - '8100'
     environment:
       - TARGET_ENV=test
     depends_on:
@@ -92,13 +97,15 @@ services:
       - processing-db:/data
       - /home/azureuser/logs:/logs
       - /home/azureuser/config/processing:/config
+    networks:
+      - api.network
 
   audit_log:
     build: ../audit_log
     image: audit_log
     container_name: audit_log
     ports: 
-      - '8110:8110'
+      - '8110'
     environment:
       - TARGET_ENV=test
     volumes:
@@ -106,18 +113,41 @@ services:
       - /home/azureuser/config/audit_log:/config
     depends_on:
       - "kafka"
-
+    networks:
+      - api.network
 
   dashboard:
     build: ../dashboard-ui
     image: dashboard
     ports:
-    - "3000:3000"
+    - "3000"
     depends_on:
     - "processing"
     - "audit_log"
+    networks:
+      - api.network
+
+  nginx:
+    image: nginx:latest
+    # Connects the conf file of the container to the conf file in our folder
+    volumes:
+    - /home/azureuser/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    # It will start up the nginx only when all api containers have started
+    depends_on:
+    - "receiver"
+    - "storage"
+    - "processing"
+    - "audit_log"
+    - "dashboard-ui"
+    # Connects the port 80 of the nginx container to localhost:80 or localhost
+    ports:
+    - "80:80"
+    networks:
+    - "api.network"
 
 volumes:
   my-db:
   processing-db:
 
+networks:
+  api.network:
