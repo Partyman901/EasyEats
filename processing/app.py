@@ -35,6 +35,7 @@ def populate_stats():
     """ Periodically update stats """
     logger.info(f"Populate stats has started")
     current_date = datetime.datetime.now()
+    format_date = current_date.strftime("%Y-%m-%dT%H:%M:%S")
     session = DB_SESSION()
     if os.path.isfile('stats.sqlite'):
         last_updated = session.query(Stats).order_by(Stats.last_updated.desc()).first()
@@ -50,8 +51,8 @@ def populate_stats():
     else:
         last_updated = {'num_orders': 0, 'num_deliveries': 0, 'max_price_purchase': 0, 'max_distance_delivery': 0, 'avg_price_purchase': 0, 'last_updated': '2020-02-16T16:18:47'}
 
-    orders_data = requests.get(f"{app_config['eventstore']['url']}/orders", params = {"start_timestamp": last_updated["last_updated"], "end_timestamp":current_date.strftime("%Y-%m-%dT%H:%M:%S")})
-    deliveries_data = requests.get(f"{app_config['eventstore']['url']}/deliveries", params = {"timestamp": last_updated["last_updated", "end_timestamp":current_date.strftime("%Y-%m-%dT%H:%M:%S")]})
+    orders_data = requests.get(f"{app_config['eventstore']['url']}/orders", params = {"start_timestamp": last_updated["last_updated"], "end_timestamp":format_date})
+    deliveries_data = requests.get(f"{app_config['eventstore']['url']}/deliveries", params = {"start_timestamp": last_updated["last_updated"], "end_timestamp":format_date})
 
     if orders_data.status_code and deliveries_data.status_code == 200:
         logger.info(f"Data received! {len(orders_data.json())} orders received, {len(deliveries_data.json())} deliveries received")

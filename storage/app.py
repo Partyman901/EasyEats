@@ -51,15 +51,16 @@ def getOrder(start_timestamp, end_timestamp):
 
     session.close()
 
-    logger.info("Query for Orders after %s returns %d results" %(timestamp, len(results_list)))
+    logger.info("Query for Orders after %s and before %s returns %d results" %(start_timestamp, end_timestamp, len(results_list)))
     return results_list, 200
 
-def getDelivery(timestamp):
+def getDelivery(start_timestamp, end_timestamp):
     """ Gets a delivery event """
     session = DB_SESSION()
     logger.info(f"Connected to DB. Hostname: {hostname}, Port: {port}")
-    timestamp_datetime = datetime.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S")
-    deliveries = session.query(Delivery).filter(Delivery.date_created >= timestamp_datetime)
+    start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%S")
+    end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%S")
+    deliveries = session.query(Delivery).filter(Delivery.date_created >= start_timestamp_datetime, Delivery.date_created < end_timestamp_datetime)
     results_list = []
 
     for delivery in deliveries:
@@ -67,7 +68,7 @@ def getDelivery(timestamp):
 
     session.close()
 
-    logger.info("Query for Deliveries after %s returns %d results" %(timestamp, len(results_list)))
+    logger.info("Query for Deliveries after %s and before %s returns %d results" %(start_timestamp, end_timestamp, len(results_list)))
     return results_list, 200
 
 
