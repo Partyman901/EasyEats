@@ -89,7 +89,7 @@ services:
       - "kafka"
       - "storage"
     volumes:
-      - my-db:/var/lib/sqlite
+      - processing-db:/data
       - /home/azureuser/logs:/logs
       - /home/azureuser/config/processing:/config
 
@@ -119,4 +119,5 @@ services:
 
 volumes:
   my-db:
+  processing-db:
 

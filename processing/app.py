@@ -8,6 +8,7 @@ import logging.config
 import datetime
 import requests
 import os
+import sqlite3
 from base import Base
 from apscheduler.schedulers.background import BackgroundScheduler
 from stats import Stats
@@ -16,7 +17,22 @@ from flask_cors import CORS, cross_origin
 from sqlalchemy import create_engine
 from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
-import os
+
+if os.path.exists("app_config['datastore']['filename']") != True:
+    conn = sqlite3.connect("app_config['datastore']['filename']")
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE stats
+        (id INTEGER PRIMARY KEY ASC,
+        num_orders INTEGER NOT NULL,
+        num_deliveries INTEGER NOT NULL,
+        max_price_purchase INTEGER,
+        max_distance_delivery INTEGER,
+        avg_price_purchase INTEGER,
+        last_updated VARCHAR(100) NOT NULL)
+        ''')
+    conn.commit()
+    conn.close() 
 
 if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":
     print("In Test Environment")
@@ -42,8 +58,6 @@ logger.info("Log Conf File: %s" % log_conf_file)
 DB_ENGINE = create_engine(f"sqlite:///{app_config['datastore']['filename']}")
 Base.metadata.bind = DB_ENGINE
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
-
-
 
 def populate_stats():
     """ Periodically update stats """
