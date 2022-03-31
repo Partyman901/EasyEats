@@ -66,7 +66,7 @@ def populate_stats():
     current_date = datetime.datetime.now()
     format_date = current_date.strftime("%Y-%m-%dT%H:%M:%S")
     session = DB_SESSION()
-    if os.path.exists("app_config['datastore']['filename']") != True:
+    if os.path.exists("app_config['datastore']['filename']"):
         last_updated = session.query(Stats).order_by(Stats.last_updated.desc()).first()
         if last_updated == None:
             last_updated = {'num_orders': 0, 'num_deliveries': 0, 'max_price_purchase': 0, 'max_distance_delivery': 0, 'avg_price_purchase': 0, 'last_updated': '2020-02-16T16:18:47'}
@@ -79,16 +79,16 @@ def populate_stats():
                 stats_list.append(stat.to_dict())
     else:
         last_updated = {'num_orders': 0, 'num_deliveries': 0, 'max_price_purchase': 0, 'max_distance_delivery': 0, 'avg_price_purchase': 0, 'last_updated': '2020-02-16T16:18:47'}
-
+        stats_list = [last_updated]
     orders_data = requests.get(f"{app_config['eventstore']['url']}/orders", params = {"start_timestamp": last_updated["last_updated"], "end_timestamp":format_date})
     deliveries_data = requests.get(f"{app_config['eventstore']['url']}/deliveries", params = {"start_timestamp": last_updated["last_updated"], "end_timestamp":format_date})
 
     if orders_data.status_code and deliveries_data.status_code == 200:
         logger.info(f"Data received! {len(orders_data.json())} orders received, {len(deliveries_data.json())} deliveries received")
-        for order in orders_data.json():
-            logger.debug(f"Order data: {order['traceID']} received")
-        for delivery in deliveries_data.json():
-            logger.debug(f"Delivery data: {delivery['traceID']} received")
+        # for order in orders_data.json():
+        #     logger.debug(f"Order data: {order['traceID']} received")
+        # for delivery in deliveries_data.json():
+        #     logger.debug(f"Delivery data: {delivery['traceID']} received")
 
         num_orders = last_updated["num_orders"] + len(orders_data.json()) # Calculate stats
 
