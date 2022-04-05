@@ -93,6 +93,8 @@ services:
     depends_on:
       - "kafka"
       - "storage"
+    network_mode: 
+      - "host"
     volumes:
       - processing-db:/data
       - /home/azureuser/logs:/logs
