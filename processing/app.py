@@ -154,9 +154,9 @@ if os.path.exists(app_config['datastore']['filename']) != True:
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
-# if "TARGET_ENV" not in os.environ or os.environ["TARGET_ENV"] != "test":
-CORS(app.app)
-app.app.config['CORS_HEADERS'] = 'Content-Type'
+if "TARGET_ENV" not in os.environ or os.environ["TARGET_ENV"] != "test":
+    CORS(app.app)
+    app.app.config['CORS_HEADERS'] = 'Content-Type'
 app.add_api("openapi.yaml",strict_validation=False, validate_responses=True)
 
 if __name__== "__main__":
