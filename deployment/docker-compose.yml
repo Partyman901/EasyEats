@@ -51,7 +51,7 @@ services:
       
   receiver:
     build: ../receiver
-    image: receiver
+    image: partyman901/receiver:receiverapp
     container_name: receiver
     ports: 
       - '8080'
@@ -67,7 +67,7 @@ services:
     
   storage:
     build: ../storage
-    image: storage
+    image: partyman901/storage:storageapp
     container_name: storage
     ports: 
       - '8090'
@@ -84,7 +84,7 @@ services:
 
   processing:
     build: ../processing
-    image: processing
+    image: partyman901/processing:processingapp
     container_name: processing
     ports:
       - '8100'
@@ -102,7 +102,7 @@ services:
 
   audit_log:
     build: ../audit_log
-    image: audit_log
+    image: partyman901/audit_log:audit_logapp
     container_name: audit_log
     ports: 
       - '8110'
