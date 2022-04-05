@@ -86,8 +86,6 @@ services:
     build: ../processing
     image: partyman901/processing:processingapp
     container_name: processing
-    ports:
-      - '8100:8100'
     environment:
       - TARGET_ENV=test
     depends_on:
