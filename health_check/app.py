@@ -79,6 +79,8 @@ def return_health_checks():
     """ Returns health checks """
     logger.info("Return health checks started")
     session = DB_SESSION()
+    all_data = session.query(Check).order_by(Check.last_updated)
+    print(all_data)
     last_updated = session.query(Check).order_by(Check.last_updated.desc()).first()
     if last_updated == None:
         logger.error("Health checks do not exist!")

@@ -11,7 +11,7 @@ paths:
   /health_checks:
     get:
       summary: Gets health status of services
-      description: Gets health status of ecach service
+      description: Gets health status of each service
       operationId: app.return_health_checks
       responses:
         "200":  
@@ -46,7 +46,6 @@ components:
           example: "Running"
         audit:
           type: string
-          format: money
           example: "Running"
         last_update:
           type: string
