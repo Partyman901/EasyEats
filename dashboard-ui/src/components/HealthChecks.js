@@ -34,7 +34,7 @@ export default function HealthChecks() {
         const dateDiff = (currentDate.getTime() - statusDate.getTime()) / 1000;
         return(
             <div>
-                <h1>Latest Stats</h1>
+                <h1>Service Health Statuses</h1>
                 <table className={"StatsTable"}>
 					<tbody>
 						<tr>
