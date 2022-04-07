@@ -157,7 +157,7 @@ app = connexion.FlaskApp(__name__, specification_dir='')
 if "TARGET_ENV" not in os.environ or os.environ["TARGET_ENV"] != "test":
     CORS(app.app)
     app.app.config['CORS_HEADERS'] = 'Content-Type'
-app.add_api("openapi.yaml",strict_validation=False, validate_responses=True)
+app.add_api("openapi.yaml", base_path="/processing",strict_validation=False, validate_responses=True)
 
 if __name__== "__main__":
     init_scheduler()
