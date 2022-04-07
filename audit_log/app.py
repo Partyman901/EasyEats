@@ -38,6 +38,7 @@ def get_order(index):
     """ Get order Reading in History """ 
     hostname = "%s:%d" % (app_config["events"]["hostname"],  
                           app_config["events"]["port"]) 
+    logger.debug(f"TRYING TO CONNECT TO KAFKA ON {hostname}")
     client = KafkaClient(hosts=hostname) 
     topic = client.topics[str.encode(app_config["events"]["topic"])] 
 
@@ -70,6 +71,7 @@ def get_delivery(index):
     """ Get delivery Reading in History """ 
     hostname = "%s:%d" % (app_config["events"]["hostname"],  
                           app_config["events"]["port"]) 
+    logger.debug(f"TRYING TO CONNECT TO KAFKA ON {hostname}")
     client = KafkaClient(hosts=hostname) 
     topic = client.topics[str.encode(app_config["events"]["topic"])] 
  
