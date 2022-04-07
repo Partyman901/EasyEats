@@ -27,5 +27,5 @@ class Check(Base):
         dict['storage'] = self.storage
         dict['processing'] = self.processing
         dict['audit'] = self.audit
-        dict['last_updated'] = self.last_updated.strftime("%Y-%m-%dT%H:%M:%S")
+        dict['last_updated'] = self.last_updated.strftime("%Y-%m-%dT%H:%M:%SZ")
         return dict

@@ -29,6 +29,7 @@ export default function AppStats() {
     } else if (isLoaded === false){
         return(<div>Loading...</div>)
     } else if (isLoaded === true){
+        const currentDate = new Date(stats['last_updated'])
         return(
             <div>
                 <h1>Latest Stats</h1>
@@ -53,8 +54,7 @@ export default function AppStats() {
 						</tr>
 					</tbody>
                 </table>
-                <h3>Last Updated: {stats['last_updated']}</h3>
-
+                <h3>Last Updated: {currentDate}</h3>
             </div>
         )
     }
