@@ -58,7 +58,6 @@ services:
   receiver:
     build: ../receiver
     image: partyman901/receiver:receiverapp
-    container_name: receiver
     ports: 
       - '8080'
     environment:
