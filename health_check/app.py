@@ -37,35 +37,49 @@ def get_health_checks():
     current_date = datetime.datetime.now()
     session = DB_SESSION()
 
-    receiver_request = requests.get(f"{app_config['eventstore']['url']}{app_config['eventstore']['receiver']}", timeout=5)
-    storage_request = requests.get(f"{app_config['eventstore']['url']}{app_config['eventstore']['storage']}", timeout=5)
-    processing_request = requests.get(f"{app_config['eventstore']['url']}{app_config['eventstore']['processing']}", timeout=5)
-    audit_request = requests.get(f"{app_config['eventstore']['url']}{app_config['eventstore']['audit']}", timeout=5)
-
-    logger.info(f"Request received! Status code for Receiver is {receiver_request.status_code}")
-    logger.info(f"Request received! Status code for Storage is {storage_request.status_code}")
-    logger.info(f"Request received! Status code for Processing is {processing_request.status_code}")
-    logger.info(f"Request received! Status code for Audit Log is {audit_request.status_code}")
-
-    if receiver_request.status_code == 200:
-        receiver_health = "Running"
-    else:
+    try:
+        receiver_request = requests.get(f"{app_config['eventstore']['url']}{app_config['eventstore']['receiver']}", timeout=5)
+        logger.info(f"Request received! Status code for Receiver is {receiver_request.status_code}")
+        if receiver_request.status_code == 200:
+            receiver_health = "Running"
+        else:
+            receiver_health = "Down"
+    except:
+        logger.info(f"Request failed to receiver...")
         receiver_health = "Down"
 
-    if storage_request.status_code == 200:
-        storage_health = "Running"
-    else:
-        storage_health = "Down"
+    try:
+        storage_request = requests.get(f"{app_config['eventstore']['url']}{app_config['eventstore']['storage']}", timeout=5)
+        logger.info(f"Request received! Status code for Storage is {storage_request.status_code}")
+        if storage_request.status_code == 200:
+            storage_health = "Running"
+        else:
+            storage_health = "Down"
+    except:
+        logger.info(f"Request failed to storage...")
+        storage_health = "Down" 
 
-    if processing_request.status_code == 200:
-        processing_health = "Running"
-    else:
-        processing_health = "Down"
-    
-    if audit_request.status_code == 200:
-        audit_health = "Running"
-    else:
-        audit_health = "Down"
+    try:
+        processing_request = requests.get(f"{app_config['eventstore']['url']}{app_config['eventstore']['processing']}", timeout=5)
+        logger.info(f"Request received! Status code for processing is {processing_request.status_code}")
+        if processing_request.status_code == 200:
+            processing_health = "Running"
+        else:
+            processing_health = "Down"
+    except:
+        logger.info(f"Request failed to processing...")
+        processing_health = "Down" 
+
+    try:
+        audit_request = requests.get(f"{app_config['eventstore']['url']}{app_config['eventstore']['audit']}", timeout=5)
+        logger.info(f"Request received! Status code for audit is {audit_request.status_code}")
+        if audit_request.status_code == 200:
+            audit_health = "Running"
+        else:
+            audit_health = "Down"
+    except:
+        logger.info(f"Request failed to audit...")
+        audit_health = "Down" 
 
     stats = Check(receiver_health, storage_health, processing_health, audit_health, current_date)
 
