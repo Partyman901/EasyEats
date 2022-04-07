@@ -94,6 +94,10 @@ def get_delivery(index):
     logger.error("Could not find delivery at index %d" % index) 
     return { "message": "Not Found"}, 404
 
+def get_health():
+    """ Returns 200 """
+    return { "message": "Healthy!"}, 200
+
 app = connexion.FlaskApp(__name__, specification_dir='')
 if "TARGET_ENV" not in os.environ or os.environ["TARGET_ENV"] != "test":
     CORS(app.app)

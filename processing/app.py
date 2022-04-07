@@ -131,6 +131,10 @@ def get_stats():
 
     return data_dict, 200
 
+def get_health():
+    """ Returns 200 """
+    return { "message": "Healthy!"}, 200
+
 def create_db():
     """ Creates sqlite database for when it doesn't exist """
     conn = sqlite3.connect(app_config['datastore']['filename'])

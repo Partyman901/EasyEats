@@ -141,41 +141,9 @@ def process_messages():
     logger.debug(f"Stored event addOrder request with a trace id of {body['traceID']}")
 
 
-# def addOrder(body):
-#     """ Adds order event """
-#     # body_string = f"Customer: {body['customer']}, Food: {body['food']}, Price: {body['price']}, OrderID: {body['orderID']}"
-#     # add_json(body_string)
-#     session = DB_SESSION()
-#     logger.info(f"Connected to DB. Hostname: {hostname}, Port: {port}")
-#     order = Order(body['customer'],
-#                     body['food'],
-#                     body['orderID'],
-#                     body['price'],
-#                     body['traceID'])
-#     session.add(order)
-#     session.commit()
-#     session.close()
-#     logger.debug(f"Stored event addOrder request with a trace id of {body['traceID']}")
-#     return NoContent, 201
-
-
-# def addDelivery(body):
-#     """ Adds delivery event """
-#     # body_string = f"orderNum: {body['orderNum']}, Distance: {body['distance']}, Driver: {body['driver']}, Address: {body['address']}"
-#     # add_json(body_string)
-#     session = DB_SESSION()
-#     logger.info(f"Connected to DB. Hostname: {hostname}, Port: {port}")
-#     delivery = Delivery(body['address'],
-#                     body['driver'],
-#                     body['distance'],
-#                     body['orderNum'],
-#                     body['traceID'])
-#     session.add(delivery)
-
-#     session.commit()
-#     session.close()
-#     logger.debug(f"Stored event addDelivery request with a trace id of {body['traceID']}")
-#     return NoContent, 201
+def get_health():
+    """ Returns 200 """
+    return { "message": "Healthy!"}, 200
 
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yaml",base_path="/storage",strict_validation=True, validate_responses=True)

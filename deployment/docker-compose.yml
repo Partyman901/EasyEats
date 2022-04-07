@@ -118,6 +118,22 @@ services:
     networks:
       - "api.network"
 
+  health_check:
+    build: ../health_check
+    image: partyman901/health_check
+    ports: 
+      - '8120'
+    environment:
+      - TARGET_ENV=test
+    depends_on:
+      - "receiver"
+      - "storage"
+      - "processing"
+      - "audit_log"
+      - "dashboard-ui"
+    networks:
+      - "api.network"
+
   dashboard-ui:
     build: ../dashboard-ui
     image: dashboard

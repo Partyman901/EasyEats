@@ -16,25 +16,6 @@ tags:
   description: Operations available to regular developers
 paths:
   /orders:
-    # post:
-    #   tags:
-    #   - admins
-    #   summary: adds an order
-    #   description: Adds an order to the system
-    #   operationId: app.addOrder
-    #   requestBody:
-    #     description: Order to add
-    #     content:
-    #       application/json:
-    #         schema:
-    #           $ref: '#/components/schemas/Orders'
-    #   responses:
-    #     "201":
-    #       description: Order added
-    #     "400":
-    #       description: invalid input, object invalid
-    #     "409":
-    #       description: That order already exists
     get:
       tags:
       - display
@@ -75,25 +56,6 @@ paths:
                   message:
                     type: string
   /deliveries:
-    # post:
-    #   tags:
-    #   - admins
-    #   summary: adds a delivery
-    #   description: Adds a delivery to the system
-    #   operationId: app.addDelivery
-    #   requestBody:
-    #     description: Delivery to add
-    #     content:
-    #       application/json:
-    #         schema:
-    #           $ref: '#/components/schemas/Deliveries'
-    #   responses:
-    #     "201":
-    #       description: Delivery added
-    #     "400":
-    #       description: invalid input, object invalid
-    #     "409":
-    #       description: That delivery already exists
     get:
       tags:
       - display
@@ -133,6 +95,16 @@ paths:
                 properties:
                   message:
                     type: string
+  /health:
+    get:
+      summary: Returns 200 if healthy
+      description: Returns 200 if healthy
+      operationId: app.get_health
+      responses:
+        "200":  
+          description: This service is healthy!
+        "400":
+          description: This service is unhealthy
 components:
   schemas:
     Orders:

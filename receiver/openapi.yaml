@@ -55,6 +55,16 @@ paths:
           description: invalid input, object invalid
         "409":
           description: That delivery already exists
+  /health:
+    get:
+      summary: Returns 200 if healthy
+      description: Returns 200 if healthy
+      operationId: app.get_health
+      responses:
+        "200":  
+          description: This service is healthy!
+        "400":
+          description: This service is unhealthy
 components:
   schemas:
     Orders:

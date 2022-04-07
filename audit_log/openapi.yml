@@ -79,6 +79,16 @@ paths:
                     type: string 
         '404': 
           description: Not Found 
+  /health:
+    get:
+      summary: Returns 200 if healthy
+      description: Returns 200 if healthy
+      operationId: app.get_health
+      responses:
+        "200":  
+          description: This service is healthy!
+        "400":
+          description: This service is unhealthy
  
 components: 
   schemas: 

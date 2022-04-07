@@ -1,0 +1,12 @@
+version: 1
+datastore:
+ filename: health_checks.sqlite
+scheduler:
+ period_sec: 5
+eventstore:
+ url: http://easyeats.eastus.cloudapp.azure.com
+ receiver: /receiver/health
+ storage: /storage/health
+ processing: /processing/health
+ audit: /audit_log/health
+

@@ -1,0 +1,53 @@
+---
+openapi: 3.0.0
+info:
+  title: Stats API
+  description: This API gets health of services
+  contact:
+    email: stevennguyen901@gmail.com
+  version: 1.0.0
+
+paths:
+  /health_checks:
+    get:
+      summary: Gets health status of services
+      description: Gets health status of ecach service
+      operationId: app.return_health_checks
+      responses:
+        "200":  
+          description: Successfully return list of health checks
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/HealthCheck'
+        "400":
+          description: Failed to get health checks
+components:
+  schemas:
+    HealthCheck:
+      required:
+      - receiver
+      - storage
+      - processing
+      - audit
+      - last_update
+      type: object
+      properties:
+        receiver:
+          type: string
+          example: "Running"
+        storage:
+          type: string
+          example: "Running"
+        processing:
+          type: string
+          example: "Running"
+        audit:
+          type: string
+          format: money
+          example: "Running"
+        last_update:
+          type: string
+          example: "Running"
