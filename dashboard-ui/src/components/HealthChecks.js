@@ -59,7 +59,7 @@ export default function HealthChecks() {
 						</tr>
                         <tr>
 							<td>Last Updated:</td>
-							<td>{round(dateDiff)} seconds ago</td>
+							<td>{Math.round(dateDiff)} seconds ago</td>
 						</tr>
 					</tbody>
                 </table>
