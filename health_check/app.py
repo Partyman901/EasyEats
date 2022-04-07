@@ -103,7 +103,7 @@ def create_db():
     c = conn.cursor()
     c.execute('''
         CREATE TABLE checks
-        (id VARCHAR(100) PRIMARY KEY ASC,
+        (id INTEGER PRIMARY KEY ASC,
         receiver VARCHAR(100) NOT NULL,
         storage VARCHAR(100) NOT NULL,
         processing VARCHAR(100) NOT NULL,
@@ -112,7 +112,6 @@ def create_db():
         ''')
     conn.commit()
     conn.close() 
-
 
 logger.info(f"THE PATH IS {app_config['datastore']['filename']}")
 if os.path.exists(app_config['datastore']['filename']) != True:

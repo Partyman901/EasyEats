@@ -13,7 +13,7 @@ class Check(Base):
     last_updated = Column(DateTime, nullable=False)
 
     def __init__(self, receiver, storage, processing, audit, last_updated):
-        """ Initializes a processing statistics objet """
+        """ Initializes a Health Check """
         self.receiver = receiver
         self.storage = storage
         self.processing = processing
@@ -21,7 +21,7 @@ class Check(Base):
         self.last_updated = last_updated
 
     def to_dict(self):
-        """ Dictionary Representation of a statistics """
+        """ Dictionary Representation of Health Checks """
         dict = {}
         dict['receiver'] = self.receiver
         dict['storage'] = self.storage
@@ -29,3 +29,8 @@ class Check(Base):
         dict['audit'] = self.audit
         dict['last_updated'] = self.last_updated.strftime("%Y-%m-%dT%H:%M:%S")
         return dict
+                receiver VARCHAR(100) NOT NULL,
+        storage VARCHAR(100) NOT NULL,
+        processing VARCHAR(100) NOT NULL,
+        audit VARCHAR(100) NOT NULL,
+        last_updated VARCHAR(100) NOT NULL
