@@ -10,6 +10,8 @@ services:
     hostname: zookeeper
     volumes:
       - /home/azureuser/zookeeper/data:/opt/zookeeper-3.4.13/data
+    networks:
+      - "api.network"
 
   kafka:
     image: wurstmeister/kafka
@@ -33,6 +35,8 @@ services:
       - /home/azureuser/kafka:/kafka/kafka-logs
     depends_on:
       - "zookeeper"
+    networks:
+      - "api.network"
 
   db:
     image: mysql:5.7 
@@ -48,6 +52,8 @@ services:
       - '3306' 
     volumes: 
       - my-db:/var/lib/mysql    
+    networks:
+      - "api.network"
       
   receiver:
     build: ../receiver
