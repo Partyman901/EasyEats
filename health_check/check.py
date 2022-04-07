@@ -29,8 +29,3 @@ class Check(Base):
         dict['audit'] = self.audit
         dict['last_updated'] = self.last_updated.strftime("%Y-%m-%dT%H:%M:%S")
         return dict
-                receiver VARCHAR(100) NOT NULL,
-        storage VARCHAR(100) NOT NULL,
-        processing VARCHAR(100) NOT NULL,
-        audit VARCHAR(100) NOT NULL,
-        last_updated VARCHAR(100) NOT NULL
